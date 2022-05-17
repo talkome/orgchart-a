@@ -15,11 +15,39 @@ using namespace std;
 
 namespace ariel {
 
+    enum Level {
+        LEVEL_ORDER,
+        REV_ORDER,
+        PREORDER,
+        NONE
+    };
+
     class OrgChart {
+
+        class iterator {
+        public:
+            Node* root;
+            deque<Node*> tree_traversal;
+
+            // Constructor
+            iterator(Node* node): root(node) {}
+
+            // Tree Scanner
+//            void scan_level_order(Node*);
+//            void scan_reverse_order(Node*);
+//            void scan_preorder(Node*);
+
+            // Operators
+            string& operator*() const;
+            bool operator==(const iterator&) const;
+            bool operator!=(const iterator&) const;
+            iterator& operator++();
+            ariel::OrgChart::iterator operator++(int);
+            string * operator->() const;
+        };
 
     public:
         Node* root;
-        deque<string> tree_traversal;
 
         // Constructor
         OrgChart(){
@@ -29,9 +57,6 @@ namespace ariel {
         // Destructor
         ~OrgChart()= default;
 
-        // Print Operator
-        friend ostream& operator<<(ostream &out, OrgChart &oc);
-
         // addition
         OrgChart& add_root(string const &);
         OrgChart& add_sub(string const &, string const &);
@@ -39,21 +64,27 @@ namespace ariel {
         // searching using bfs algorithm
         Node* find_node(string const &) const;
 
-        // Tree Scanner
-        void scan_level_order(Node*);
-        void scan_reverse_order(Node*);
-        void scan_preorder(Node*);
+        // Print Operator
+        friend ostream& operator<<(ostream &out, OrgChart &oc);
 
-        // Iterator Method
-        deque<string>::iterator begin_level_order();
-        deque<string>::iterator end_level_order();
+        // Method
+        iterator begin_level_order() const;
+        iterator end_level_order();
 
-        deque<string>::iterator begin_reverse_order();
-        deque<string>::iterator reverse_order();
+        iterator begin_reverse_order() const;
+        iterator reverse_order();
 
-        deque<string>::iterator begin_preorder();
-        deque<string>::iterator end_preorder();
+        iterator begin_preorder() const;
+        iterator end_preorder();
 
+        // Iterator
+        iterator begin() const{
+            return root;
+        }
+
+        iterator end(){
+            return nullptr;
+        }
     };
 }
 

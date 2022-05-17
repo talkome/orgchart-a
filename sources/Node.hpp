@@ -7,7 +7,7 @@
 using namespace std;
 
 struct Node {
-    vector<Node> sons;
+    vector<Node*> sons;
     string name;
 
     // Constructor
